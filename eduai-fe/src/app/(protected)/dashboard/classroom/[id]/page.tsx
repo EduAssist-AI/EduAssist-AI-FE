@@ -10,7 +10,8 @@ import RAGView from '@/components/ui/RAGView';
 import NotesView from '@/components/ui/NotesView';
 import ResourceItem from '@/components/ui/ResourceItem';
 import UploadModal from '@/components/ui/UploadModal';
-
+import { use } from 'react';
+import { int } from 'better-auth';
 // Define the ChatMessage interface
 interface ChatMessage {
   id: string;
@@ -19,22 +20,21 @@ interface ChatMessage {
   timestamp: string;
 }
 
-interface ClassroomPageProps {
-  params: {
-    id: string;
-  };
-}
 
-const ClassroomPage = ({ params }: ClassroomPageProps) => {
+
+const ClassroomPage = ({ 
+  params 
+}: { 
+  params: Promise<{ id: number }> 
+}) => {
   const [user] = useState({
     name: 'John Doe',
     email: 'john.doe@example.com'
   });
-
+  const { id: page_id } = use(params);
   const [leftColumnExpanded, setLeftColumnExpanded] = useState(true);
   const [rightColumnExpanded, setRightColumnExpanded] = useState(true);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
-
   // State to manage which view is active in the center column
   const [activeView, setActiveView] = useState<'quiz' | 'source' | 'notes' >('quiz');
 
@@ -73,19 +73,38 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
   };
 
   // Mock classroom data
-  const classroom = {
-    id: params.id,
+// Mock data for classrooms
+const mockClassrooms = [
+  {
+    id: '1',
     name: 'Computer Science 101',
-    description: 'Introduction to programming concepts and algorithms',
+    description: 'Introduction to programming concepts and algorithms. This course covers fundamental programming principles, data structures, and algorithmic thinking necessary for software development.',
     sourceCount: 12,
     lastUpdated: 'May 15, 2023'
-  };
+  },
+
+  {
+    id: '3',
+    name: 'Mathematics Advanced',
+    description: 'Advanced calculus and linear algebra concepts. This course delves into complex mathematical theories and their applications in engineering and physics.',
+    sourceCount: 8,
+    lastUpdated: 'May 10, 2023'
+  },
+  {
+    id: '2',
+    name: 'Biology Essentials',
+    description: 'Fundamentals of biology and cellular processes. Explore the basic principles of life sciences, including genetics, evolution, and ecosystem dynamics.',
+    sourceCount: 15,
+    lastUpdated: 'May 5, 2023'
+  },
+
+];
 
   // Define chat messages data for different views
   const sourceChatMessages: ChatMessage[] = [
     {
       id: '1',
-      text: `Hello! I'm your AI assistant for ${classroom.name}. How can I help you today?`,
+      text: `Hello! I'm your AI assistant for ${mockClassrooms[page_id - 1].name}. How can I help you today?`,
       sender: 'system',
       timestamp: '10:00 AM'
     },
@@ -103,17 +122,17 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
     }
   ];
 
- 
+
 
   // Function to render the active view in the center column
   const renderActiveView = () => {
     switch (activeView) {
       case 'quiz':
-        return <QuizView classroomName={classroom.name} />;
+        return <QuizView classroomName={mockClassrooms[page_id - 1].name} />;
       case 'source':
-        return <RAGView classroomName={classroom.name} initialMessages={sourceChatMessages} title="Source Chat" />;
+        return <RAGView initialMessages={sourceChatMessages} title="Source Chat" />;
       case 'notes':
-        return <NotesView classroomName={classroom.name} />;
+        return <NotesView classroomName={mockClassrooms[page_id - 1].name} />;
       // case 'chat':
       //   return <RAGView classroomName={classroom.name} initialMessages={chatMessages} title="Notes Chat" />;
       default:
@@ -171,8 +190,8 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
       <ClassroomPageHeader 
         user={user} 
         onLogout={handleLogout}
-        classroomName={classroom.name}
-        classroomDescription={classroom.description}
+        classroomName={mockClassrooms[page_id - 1].name}
+        classroomDescription={mockClassrooms[page_id - 1].description}
       />
       
       <main className="flex flex-1 overflow-hidden">

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import DashboardHeader from '@/components/ui/DashboardHeader';
 import ClassroomCard from '@/components/ui/ClassroomCard';
 import Button from '@/components/forms/Button';
@@ -32,6 +33,7 @@ const mockClassrooms = [
 ];
 
 const DashboardHome = () => {
+  const router = useRouter();
   const [user] = useState({
     name: 'John Doe',
     email: 'john.doe@example.com'
@@ -44,7 +46,9 @@ const DashboardHome = () => {
 
   const handleClassroomClick = (id: string) => {
     console.log(`Classroom ${id} clicked`);
-    // Handle classroom click logic here
+    
+    // Navigate to the general classroom page as requested
+    router.push('/dashboard/classroom/' + id);
   };
 
   return (

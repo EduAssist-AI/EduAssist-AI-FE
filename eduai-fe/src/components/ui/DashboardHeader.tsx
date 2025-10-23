@@ -36,16 +36,16 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onLogout }) => 
   };
 
   return (
-    <header className="py-6 px-8 bg-[var(--background)] border-b border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)]">
-      <div className="py-4 px-6 flex justify-between items-center">
+    <header className="py-2 px-8 bg-[var(--background)] border-b border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)]">
+      <div className="py-4 px-6 mx-auto flex justify-between items-center">
         <div className="text-2xl font-bold text-[var(--color-primary)]">
           EduAssist AI
         </div>
         
         <div className="flex items-center space-x-4">
-          <Link href="/dashboard" className="text-[var(--foreground)] hover:text-[var(--color-primary)]">
+          {/* <Link href="/dashboard" className="text-[var(--foreground)] hover:text-[var(--color-primary)]">
             Dashboard
-          </Link>
+          </Link> */}
           
           <div className="relative" ref={dropdownRef}>
             <button 

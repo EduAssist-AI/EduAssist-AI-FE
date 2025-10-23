@@ -8,12 +8,11 @@ interface ChatMessage {
 }
 
 interface RAGViewProps {
-  classroomName: string;
   initialMessages: ChatMessage[];
   title: string;
 }
 
-const RAGView: React.FC<RAGViewProps> = ({ classroomName, initialMessages, title }) => {
+const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title }) => {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
 
