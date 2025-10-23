@@ -81,7 +81,7 @@ const DashboardHome = () => {
             ) : (
               <div className="text-center py-12">
                 <p className="text-lg text-[var(--color-neutral-dark)] dark:text-[var(--color-neutral-light)]">
-                  You don't have any classrooms yet. Create your first classroom to get started!
+                  You don&apos;t have any classrooms yet. Create your first classroom to get started!
                 </p>
               </div>
             )}

@@ -2,18 +2,25 @@
 
 import Link from 'next/link';
 import Button from '@/components/forms/Button';
-import { UserIcon, ChevronDownIcon } from '@/components/ui/Icons';
+import { UserIcon, ChevronDownIcon, ArrowLeftIcon } from '@/components/ui/Icons';
 import { useState, useRef, useEffect } from 'react';
 
-interface DashboardHeaderProps {
+interface ClassroomPageHeaderProps {
   user: {
     name: string;
     email: string;
   };
   onLogout: () => void;
+  classroomName: string;
+  classroomDescription: string;
 }
 
-const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onLogout }) => {
+const ClassroomPageHeader: React.FC<ClassroomPageHeaderProps> = ({ 
+  user, 
+  onLogout,
+  classroomName,
+  classroomDescription
+}) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +43,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onLogout }) => 
   };
 
   return (
-    <header className="py-6 px-8 bg-[var(--background)] border-b border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)]">
+    <header className="bg-[var(--background)] border-b border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)]">
+      {/* Top navigation bar */}
       <div className="py-4 px-6 flex justify-between items-center">
         <div className="text-2xl font-bold text-[var(--color-primary)]">
           EduAssist AI
@@ -83,8 +91,20 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ user, onLogout }) => 
           </div>
         </div>
       </div>
+      
+      {/* Classroom header */}
+      <div className="py-6 px-6 border-t border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)]">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-center">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-[var(--foreground)]">{classroomName}</h1>
+            <p className="text-[var(--color-neutral-dark)] dark:text-[var(--color-neutral-light)]">
+              {classroomDescription}
+            </p>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };
 
-export default DashboardHeader;
+export default ClassroomPageHeader;

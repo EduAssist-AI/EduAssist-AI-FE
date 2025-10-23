@@ -16,10 +16,10 @@ const Header: React.FC<HeaderProps> = ({ isAuthenticated = false, onLogout }) =>
           EduAssist AI
         </div>
         
-        <div className="flex items-center space-x-4">
+        <div className="flex space-x-3">
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
-              <Link href="/dashboard" className="text-[var(--foreground)] hover:text-[var(--color-primary)]">
+              <Link href="/dashboard/home" className="text-[var(--foreground)] hover:text-[var(--color-primary)]">
                 Dashboard
               </Link>
               <Button onClick={onLogout} variant="outline" size="sm">

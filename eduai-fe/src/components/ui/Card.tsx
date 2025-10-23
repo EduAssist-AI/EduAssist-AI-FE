@@ -6,6 +6,7 @@ interface CardProps {
   footer?: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({ 
@@ -13,10 +14,14 @@ const Card: React.FC<CardProps> = ({
   description, 
   footer, 
   children, 
-  className = '' 
+  className = '',
+  onClick
 }) => {
   return (
-    <div className={`bg-[var(--background)] rounded-xl border border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)] shadow-sm transition-shadow ${className}`}>
+    <div 
+      onClick={onClick}
+      className={`bg-[var(--background)] rounded-xl border border-[var(--color-neutral-light)] dark:border-[var(--color-neutral-dark)] shadow-sm transition-shadow ${className}`}
+    >
       <div className="p-6">
         <h3 className="text-xl font-semibold text-[var(--foreground)] mb-3">{title}</h3>
         <p className="text-[var(--color-neutral-dark)] dark:text-[var(--color-neutral-light)] mb-4 h-12 overflow-hidden">
