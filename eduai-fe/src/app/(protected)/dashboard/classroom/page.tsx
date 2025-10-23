@@ -6,11 +6,18 @@ import { ChevronLeftIcon, ChevronRightIcon, MenuIcon, UploadIcon } from '@/compo
 import Card from '@/components/ui/Card';
 import Button from '@/components/forms/Button';
 import QuizView from '@/components/ui/QuizView';
-import SourceChatView from '@/components/ui/SourceChatView';
+import RAGView from '@/components/ui/RAGView';
 import NotesView from '@/components/ui/NotesView';
-import ChatView from '@/components/ui/ChatView';
 import ResourceItem from '@/components/ui/ResourceItem';
 import UploadModal from '@/components/ui/UploadModal';
+
+// Define the ChatMessage interface
+interface ChatMessage {
+  id: string;
+  text: string;
+  sender: 'user' | 'system';
+  timestamp: string;
+}
 
 interface ClassroomPageProps {
   params: {
@@ -29,7 +36,7 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   // State to manage which view is active in the center column
-  const [activeView, setActiveView] = useState<'quiz' | 'source' | 'notes' | 'chat'>('source');
+  const [activeView, setActiveView] = useState<'quiz' | 'source' | 'notes' >('quiz');
 
   const handleLogout = () => {
     console.log('Logout clicked');
@@ -74,6 +81,52 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
     lastUpdated: 'May 15, 2023'
   };
 
+  // Define chat messages data for different views
+  const sourceChatMessages: ChatMessage[] = [
+    {
+      id: '1',
+      text: `Hello! I'm your AI assistant for ${classroom.name}. How can I help you today?`,
+      sender: 'system',
+      timestamp: '10:00 AM'
+    },
+    {
+      id: '2',
+      text: 'What are the key concepts in the introduction video?',
+      sender: 'user',
+      timestamp: '10:01 AM'
+    },
+    {
+      id: '3',
+      text: 'The introduction video covers fundamental programming principles, including variables, control structures, functions, and basic algorithms.',
+      sender: 'system',
+      timestamp: '10:01 AM'
+    }
+  ];
+
+ 
+
+  // Function to render the active view in the center column
+  const renderActiveView = () => {
+    switch (activeView) {
+      case 'quiz':
+        return <QuizView classroomName={classroom.name} />;
+      case 'source':
+        return <RAGView classroomName={classroom.name} initialMessages={sourceChatMessages} title="Source Chat" />;
+      case 'notes':
+        return <NotesView classroomName={classroom.name} />;
+      // case 'chat':
+      //   return <RAGView classroomName={classroom.name} initialMessages={chatMessages} title="Notes Chat" />;
+      default:
+        return (
+          <div className="p-6">
+            <p className="text-center py-10 text-[var(--color-neutral-dark)] dark:text-[var(--color-neutral-light)]">
+              Select a feature from the right column to view its content.
+            </p>
+          </div>
+        );
+    }
+  };
+
   // Mock resources data
   const mockResources = [
     {
@@ -112,28 +165,6 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
       uploadDate: 'May 15, 2023'
     }
   ];
-
-  // Function to render the active view in the center column
-  const renderActiveView = () => {
-    switch (activeView) {
-      case 'quiz':
-        return <QuizView classroomName={classroom.name} />;
-      case 'source':
-        return <SourceChatView classroomName={classroom.name} />;
-      case 'notes':
-        return <NotesView classroomName={classroom.name} />;
-      case 'chat':
-        return <ChatView classroomName={classroom.name} />;
-      default:
-        return (
-          <div className="p-6">
-            <p className="text-center py-10 text-[var(--color-neutral-dark)] dark:text-[var(--color-neutral-light)]">
-              Select a feature from the right column to view its content.
-            </p>
-          </div>
-        );
-    }
-  };
 
   return (
     <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] flex flex-col">
@@ -231,7 +262,7 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
                 
                 <Card
                   title="Source Chat"
-                  description="Ask questions and get answers based on original source materials."
+                  description="Ask questions and interact with the AI trained on sources."
                   onClick={() => setActiveView('source')}
                   className="cursor-pointer hover:shadow-md"
                 />
@@ -243,12 +274,12 @@ const ClassroomPage = ({ params }: ClassroomPageProps) => {
                   className="cursor-pointer hover:shadow-md"
                 />
                 
-                <Card
+                {/* <Card
                   title="Chat with Notes"
-                  description="Have discussions and ask questions in a chat format about the class notes."
+                  description="Ask questions and interact with the AI trained on classroom notes."
                   onClick={() => setActiveView('chat')}
                   className="cursor-pointer hover:shadow-md"
-                />
+                /> */}
               </div>
             </div>
           )}
