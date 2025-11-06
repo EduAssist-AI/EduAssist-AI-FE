@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TestSuites from '../../components/TestPilot/TestSuites';
+import Courses from '../../components/CourseManagement/Courses';
 import StatisticsChart from '../../components/ecommerce/StatisticsChart';
 import MonthlyTarget from '../../components/ecommerce/MonthlyTarget';
 import RecentOrders from '../../components/ecommerce/RecentOrders';
@@ -8,36 +8,40 @@ import DemographicCard from '../../components/ecommerce/DemographicCard';
 import PageMeta from '../../components/common/PageMeta';
 import axiosInstance from '../../api/axios';
 import { toast } from 'react-toastify';
-
-export type TestSuite = {
-  _id: string;
-  suiteName: string;
-  userId: string;
-  tool: string;
-  createdAt: string;
-};
+import { Course } from '../../components/CourseManagement/CourseTypes';
 
 export default function Home() {
-  const [testSuites, setTestSuites] = useState<TestSuite[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   fetchTestSuites();
-  // }, []);
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
-  const fetchTestSuites = async () => {
+  const fetchCourses = async () => {
     try {
-      const response = await axiosInstance.get("/test-suites");
+      const response = await axiosInstance.get("/api/v1/courses/");
       if (response.status === 200) {
-        setTestSuites(response.data);
+        // Check if response.data is an array, if not, extract courses if they are nested
+        if (Array.isArray(response.data)) {
+          setCourses(response.data);
+        } else if (response.data.courses && Array.isArray(response.data.courses)) {
+          setCourses(response.data.courses);
+        } else if (response.data.data && Array.isArray(response.data.data)) {
+          // Common pattern: { data: [...] }
+          setCourses(response.data.data);
+        } else {
+          // If response is a single object with a list property, or just return empty array
+          setCourses([]);
+        }
       } else {
-        toast.error("Failed to fetch test suites");
+        toast.error("Failed to fetch courses");
         navigate("/signin");
       }
     } catch (error) {
-      console.error("Error fetching test suites:", error);
+      console.error("Error fetching courses:", error);
       toast.error("Unexpected error. Please log in again.");
       
     } finally {
@@ -45,8 +49,9 @@ export default function Home() {
     }
   };
 
-  const filteredSuites = testSuites.filter(suite =>
-    suite.suiteName.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredCourses = courses.filter(course =>
+    course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    course.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -60,11 +65,11 @@ export default function Home() {
         <div className="col-span-12 space-y-6">
           <div className="flex justify-between items-center">
             <h1 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
-              Test Suites
+              My Courses
             </h1>
             <button
               className="text-sm px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white"
-              onClick={fetchTestSuites}
+              onClick={fetchCourses}
             >
               Refresh
             </button>
@@ -73,7 +78,7 @@ export default function Home() {
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow px-4 py-2">
             <input
               type="text"
-              placeholder="🔍 Search Test Suites..."
+              placeholder="🔍 Search Courses..."
               className="w-full bg-transparent outline-none text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -81,9 +86,9 @@ export default function Home() {
           </div>
 
           {loading ? (
-            <p className="text-gray-500 dark:text-gray-400">Loading test suites...</p>
+            <p className="text-gray-500 dark:text-gray-400">Loading courses...</p>
           ) : (
-            <TestSuites suites={filteredSuites} setSuites={setTestSuites} />
+            <Courses courses={filteredCourses} setCourses={setCourses} />
           )}
         </div>
 

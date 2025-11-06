@@ -18,6 +18,8 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import CourseDetail from "./pages/Dashboard/CourseDetail";
+import ModuleDetail from "./pages/Dashboard/ModuleDetail";
 import PrivateRoute from './components/PrivateRoute/privateRoute';
 import TestSuiteDetails from "./pages/TestsuiteDetails";
 
@@ -46,6 +48,8 @@ export default function App() {
           <Route path="/test-suites/:id" element={<TestSuiteDetails />} />
           <Route index path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/courses/:courseId" element={<PrivateRoute><CourseDetail /></PrivateRoute>} />
+          <Route path="/courses/:courseId/modules/:moduleId" element={<PrivateRoute><ModuleDetail /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><UserProfiles /></PrivateRoute>} />
           <Route path="/calendar" element={<PrivateRoute><Calendar /></PrivateRoute>} />
           <Route path="/blank" element={<PrivateRoute><Blank /></PrivateRoute>} />

@@ -174,8 +174,8 @@ const handleDelete = async () => {
 
               <div className="absolute bottom-5 right-5">
                 <Link to={`/test-suites/${suite._id}`} state={{ suite }}>
-                  <Badge color="success">
-                    <ArrowUpIcon /> Ready
+                  <Badge color="success" size="sm">
+                    Ready
                   </Badge>
                 </Link>
               </div>
