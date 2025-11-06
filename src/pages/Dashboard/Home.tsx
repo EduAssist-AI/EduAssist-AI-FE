@@ -57,8 +57,7 @@ export default function Home() {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-
-        {/* <div className="col-span-12 space-y-6">
+        <div className="col-span-12 space-y-6">
           <div className="flex justify-between items-center">
             <h1 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
               Test Suites
@@ -71,7 +70,6 @@ export default function Home() {
             </button>
           </div>
 
-          
           <div className="bg-white dark:bg-slate-800 rounded-xl shadow px-4 py-2">
             <input
               type="text"
@@ -87,7 +85,7 @@ export default function Home() {
           ) : (
             <TestSuites suites={filteredSuites} setSuites={setTestSuites} />
           )}
-        </div> */}
+        </div>
 
         <div className="col-span-12">
           <StatisticsChart />

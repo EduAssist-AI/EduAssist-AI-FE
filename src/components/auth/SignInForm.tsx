@@ -33,7 +33,8 @@ export default function SignInForm() {
       console.log("Login response:", res.data);
 
       localStorage.setItem("access-token", access_token); // Optional
-      dispatch(loginSuccess({ user: res.data.user, token: access_token }));
+      // Create a minimal user object since the API doesn't return user details on login
+      dispatch(loginSuccess({ user: { email }, token: access_token }));
 
       navigate("/home"); // Redirect to home page
     } catch (err: any) {

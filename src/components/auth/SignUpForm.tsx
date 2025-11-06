@@ -1,21 +1,24 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Alert from "../ui/alert/Alert";
 import axiosInstance from "../../api/axios";
-import { useNavigate} from "react-router-dom";
+import { useAppDispatch } from "../../store/hooks";
+import { loginSuccess } from "../../store/authSlice";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"FACULTY" | "STUDENT">("STUDENT");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [alert, setAlert] = useState<{
   variant: "success" | "error" | "warning" | "info";
@@ -28,21 +31,26 @@ const handleSubmit = async (e: React.FormEvent) => {
   setAlert(null);
   setError("");
 
-  if (!username || !email || !password) {
+  if (!name || !email || !password) {
     setError("Please fill all required fields.");
     return;
   }
 
   try {
-    await axiosInstance.post("/auth/register", { username, email, password });
+    await axiosInstance.post("/auth/register", { 
+      name, 
+      email, 
+      password,
+      role 
+    });
 
     setAlert({
       variant: "success",
       title: "User Created",
-      message: "Your account has been successfully registered!",
+      message: "Your account has been successfully registered! Please sign in.",
     });
 
-    // Optional: navigate after some delay or on user action
+    // Redirect to sign in after a delay
     setTimeout(() => navigate("/signin"), 2000);
 
   } catch (err: any) {
@@ -141,11 +149,11 @@ const handleSubmit = async (e: React.FormEvent) => {
             
             <form onSubmit={handleSubmit} className="space-y-5 mt-6">
           <div>
-            <Label>User Name<span className="text-error-500">*</span></Label>
+            <Label>Name<span className="text-error-500">*</span></Label>
             <Input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
               required
             />
@@ -183,6 +191,17 @@ const handleSubmit = async (e: React.FormEvent) => {
                 )}
               </span>
             </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Checkbox
+              className="w-5 h-5"
+              checked={role === "FACULTY"}
+              onChange={(checked) => setRole(checked ? "FACULTY" : "STUDENT")}
+            />
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              I am a faculty member
+            </p>
           </div>
 
           <div className="flex items-start gap-3">
