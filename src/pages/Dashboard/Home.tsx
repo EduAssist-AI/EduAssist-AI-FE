@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Courses from '../../components/CourseManagement/Courses';
-import StatisticsChart from '../../components/ecommerce/StatisticsChart';
-import MonthlyTarget from '../../components/ecommerce/MonthlyTarget';
-import RecentOrders from '../../components/ecommerce/RecentOrders';
-import DemographicCard from '../../components/ecommerce/DemographicCard';
+// import StatisticsChart from '../../components/ecommerce/StatisticsChart';
+// import MonthlyTarget from '../../components/ecommerce/MonthlyTarget';
+// import RecentOrders from '../../components/ecommerce/RecentOrders';
+// import DemographicCard from '../../components/ecommerce/DemographicCard';
 import PageMeta from '../../components/common/PageMeta';
 import axiosInstance from '../../api/axios';
 import { toast } from 'react-toastify';
@@ -92,7 +92,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className="col-span-12">
+        {/* <div className="col-span-12">
           <StatisticsChart />
         </div>
 
@@ -102,7 +102,7 @@ export default function Home() {
 
         <div className="col-span-12 xl:col-span-7">
           <RecentOrders />
-        </div>
+        </div> */}
       </div>
     </>
   );
