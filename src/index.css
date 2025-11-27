@@ -29,12 +29,25 @@ layer(base);
   --text-title-md--line-height: 44px;
   --text-title-sm: 30px;
   --text-title-sm--line-height: 38px;
+  --text-title-xs: 24px;
+  --text-title-xs--line-height: 32px;
   --text-theme-xl: 20px;
   --text-theme-xl--line-height: 30px;
+  --text-theme-lg: 18px;
+  --text-theme-lg--line-height: 28px;
+  --text-theme-md: 16px;
+  --text-theme-md--line-height: 24px;
   --text-theme-sm: 14px;
   --text-theme-sm--line-height: 20px;
   --text-theme-xs: 12px;
   --text-theme-xs--line-height: 18px;
+  --text-xs: 11px;
+  --text-xs--line-height: 16px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   --color-current: currentColor;
   --color-transparent: transparent;
@@ -255,6 +268,7 @@ layer(base);
 @utility menu-dropdown-badge-inactive {
   @apply bg-brand-50 group-hover:bg-brand-100 dark:bg-brand-500/15 dark:group-hover:bg-brand-500/20;
 }
+
 @utility no-scrollbar {
   /* Chrome, Safari and Opera */
   &::-webkit-scrollbar {
@@ -263,6 +277,7 @@ layer(base);
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
 @utility custom-scrollbar {
   &::-webkit-scrollbar {
     @apply size-1.5;
@@ -275,6 +290,56 @@ layer(base);
   &::-webkit-scrollbar-thumb {
     @apply bg-gray-200 rounded-full dark:bg-gray-700;
   }
+}
+
+/* Modern Typography Utilities */
+@utility heading-xl {
+  @apply text-title-xs font-semibold text-gray-900 dark:text-white;
+}
+
+@utility heading-lg {
+  @apply text-theme-xl font-semibold text-gray-900 dark:text-white;
+}
+
+@utility heading-md {
+  @apply text-theme-lg font-semibold text-gray-800 dark:text-white;
+}
+
+@utility heading-sm {
+  @apply text-theme-md font-medium text-gray-800 dark:text-white;
+}
+
+@utility body-lg {
+  @apply text-theme-md text-gray-700 dark:text-gray-300;
+}
+
+@utility body-md {
+  @apply text-theme-sm text-gray-600 dark:text-gray-400;
+}
+
+@utility body-sm {
+  @apply text-theme-xs text-gray-500 dark:text-gray-400;
+}
+
+/* Modern Spacing Utilities */
+@utility card {
+  @apply bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow duration-200;
+}
+
+@utility card-padding {
+  @apply p-5 sm:p-6;
+}
+
+@utility button-primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 focus:ring-2 focus:ring-blue-500/30;
+}
+
+@utility button-secondary {
+  @apply bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200;
+}
+
+@utility button-ghost {
+  @apply hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium py-2.5 px-4 rounded-lg transition-colors duration-200;
 }
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #344054;

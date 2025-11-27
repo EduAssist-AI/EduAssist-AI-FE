@@ -326,21 +326,29 @@ export default function ModuleDetail() {
       <div className="flex flex-col flex-1 min-h-0 w-full"> {/* Use flex-1 to fill available space, min-h-0 to prevent overflow */}
         {/* Header */}
         <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
               <button
                 onClick={() => navigate(-1)}
-                className="text-sm px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white mr-4"
+                className="button-ghost flex items-center text-sm px-4 py-2"
               >
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
                 Back
               </button>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white inline">{module.name}</h1>
+              <div>
+                <h1 className="heading-xl">{module.name}</h1>
+                <p className="body-md mt-1">{module.description}</p>
+              </div>
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
+            <div className="body-sm text-gray-500 dark:text-gray-400 flex items-center">
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
               {new Date(module.createdAt).toLocaleDateString()}
             </div>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 mt-1">{module.description}</p>
         </div>
 
         {/* Main Content */}
@@ -352,10 +360,10 @@ export default function ModuleDetail() {
             }`}
           >
             <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              {leftColumnExpanded && <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Resources</h2>}
+              {leftColumnExpanded && <h2 className="heading-md">Resources</h2>}
               <button
                 onClick={() => setLeftColumnExpanded(!leftColumnExpanded)}
-                className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
                 {leftColumnExpanded ? (
                   <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -381,7 +389,7 @@ export default function ModuleDetail() {
                   <>
                     <div className="mb-6">
                       <button
-                        className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center justify-center"
+                        className="button-primary w-full flex items-center justify-center"
                         onClick={() => setShowUploadForm(true)}
                       >
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -392,33 +400,33 @@ export default function ModuleDetail() {
                     </div>
 
                     <div className="mb-6">
-                      <h3 className="font-medium text-gray-800 dark:text-white mb-3">Module Resources</h3>
+                      <h3 className="heading-sm mb-3">Module Resources</h3>
                       <div className="space-y-2">
                         {resources && resources.length > 0 ? (
                           resources.map((resource) => (
                             <div
                               key={resource.id}
-                              className="p-3 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
+                              className="p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200 border border-gray-200 dark:border-gray-700"
                             >
                               <div className="flex items-center">
-                                <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded mr-3">
+                                <div className="bg-gradient-to-br from-blue-500 to-purple-600 p-2 rounded mr-3">
                                   {resource.type === "pdf" && (
-                                    <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                     </svg>
                                   )}
                                   {resource.type === "docx" && (
-                                    <svg className="w-5 h-5 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                   )}
                                   {resource.type === "txt" && (
-                                    <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                     </svg>
                                   )}
                                   {(resource.type === "video" || !resource.type) && (
-                                    <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                                     </svg>
                                   )}
@@ -431,7 +439,7 @@ export default function ModuleDetail() {
                             </div>
                           ))
                         ) : (
-                          <p className="text-sm text-gray-500 dark:text-gray-400">No resources available for this module</p>
+                          <p className="body-sm text-gray-500 dark:text-gray-400">No resources available for this module</p>
                         )}
                       </div>
                     </div>
@@ -455,10 +463,10 @@ export default function ModuleDetail() {
             }`}
           >
             <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              {rightColumnExpanded && <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Features</h2>}
+              {rightColumnExpanded && <h2 className="heading-md">Features</h2>}
               <button
                 onClick={() => setRightColumnExpanded(!rightColumnExpanded)}
-                className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
                 {rightColumnExpanded ? (
                   <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -479,28 +487,28 @@ export default function ModuleDetail() {
                     title="Module Chat"
                     description="Ask questions and interact with the AI trained on module content."
                     onClick={() => setActiveView('chat')}
-                    className="cursor-pointer hover:shadow-md"
+                    className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
                   />
 
                   <Card
                     title="Quiz Generator"
                     description="Generate and take AI-powered quizzes based on module content."
                     onClick={() => setActiveView('quiz')}
-                    className="cursor-pointer hover:shadow-md"
+                    className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
                   />
 
                   <Card
                     title="Summary Notes"
                     description="Access AI-generated summaries for each resource in the module."
                     onClick={() => setActiveView('notes')}
-                    className="cursor-pointer hover:shadow-md"
+                    className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
                   />
 
                   <Card
                     title="Resources"
                     description="View and manage all resources for this module."
                     onClick={() => setActiveView('resources')}
-                    className="cursor-pointer hover:shadow-md"
+                    className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
                   />
                 </div>
               </div>

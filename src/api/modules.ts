@@ -58,6 +58,13 @@ export interface ResourcesResponse {
   };
 }
 
+// Request types for chat with RAG
+export interface ChatRequest {
+  message: string;
+  llm_prompt_template: string;
+  resource_ids?: string[]; // Optional list of resource IDs to use for RAG
+}
+
 export interface VideoUploadResponse {
   videoId: string;
   title: string;

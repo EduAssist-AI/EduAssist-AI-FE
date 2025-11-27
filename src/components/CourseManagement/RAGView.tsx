@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import axiosInstance from '../../api/axios';
-import { moduleApi, type ChatMessage as ModuleChatMessage } from '../../api/modules';
+import { moduleApi, type ChatMessage as ModuleChatMessage, type Resource } from '../../api/modules';
+import ResourcesDropdown from './ResourcesDropdown';
 
 interface ChatMessage {
   id: string;
@@ -18,11 +19,42 @@ interface RAGViewProps {
 }
 
 const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", moduleId, videoId }) => {
+  // Function to get persistent resource IDs from localStorage
+  const getPersistentResourceIds = (): string[] => {
+    if (!moduleId) return [];
+    const key = `selectedResources_${moduleId}`;
+    try {
+      const stored = localStorage.getItem(key);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error('Error reading selected resources from localStorage:', error);
+      return [];
+    }
+  };
+
+  // Function to save resource IDs to localStorage
+  const savePersistentResourceIds = (resourceIds: string[]) => {
+    if (!moduleId) return;
+    const key = `selectedResources_${moduleId}`;
+    try {
+      localStorage.setItem(key, JSON.stringify(resourceIds));
+    } catch (error) {
+      console.error('Error saving selected resources to localStorage:', error);
+    }
+  };
+
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedResourceIds, setSelectedResourceIds] = useState<string[]>(() => getPersistentResourceIds());
+  const [showResourcesDropdown, setShowResourcesDropdown] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const { token } = useAuth();
+
+  // Update persistent storage when selectedResourceIds changes
+  useEffect(() => {
+    savePersistentResourceIds(selectedResourceIds);
+  }, [selectedResourceIds, moduleId]);
 
   // Fetch existing chat history when component mounts if moduleId is provided
   useEffect(() => {
@@ -67,6 +99,34 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleResourceSelect = (resourceId: string, selected: boolean) => {
+    if (selected) {
+      if (!selectedResourceIds.includes(resourceId)) {
+        setSelectedResourceIds([...selectedResourceIds, resourceId]);
+      }
+    } else {
+      setSelectedResourceIds(selectedResourceIds.filter(id => id !== resourceId));
+    }
+  };
+
+  const handleApplyResources = () => {
+    // Resources are already selected in state, so just close the dropdown
+    setShowResourcesDropdown(false);
+  };
+
+  const handleClearResources = () => {
+    setSelectedResourceIds([]);
+    // Also clear from localStorage
+    if (moduleId) {
+      const key = `selectedResources_${moduleId}`;
+      try {
+        localStorage.removeItem(key);
+      } catch (error) {
+        console.error('Error clearing selected resources from localStorage:', error);
+      }
+    }
+  };
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || !token) return;
 
@@ -89,19 +149,22 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
         // Use the video-specific chat endpoint if videoId is provided
         response = await axiosInstance.post(`/api/v1/videos/${videoId}/chat`, {
           message: inputMessage,
-          llm_prompt_template: "You are an AI assistant for educational content. Answer questions based on the provided context."
+          llm_prompt_template: "You are an AI assistant for educational content. Answer questions based on the provided context.",
+          resource_ids: selectedResourceIds
         });
       } else if (moduleId) {
         // If we have a moduleId, we can use the module-specific chat endpoint
         response = await axiosInstance.post(`/api/v1/modules/${moduleId}/chat`, {
           message: inputMessage,
-          llm_prompt_template: "You are an AI assistant for educational content. Answer questions based on the provided context."
+          llm_prompt_template: "You are an AI assistant for educational content. Answer questions based on the provided context.",
+          resource_ids: selectedResourceIds
         });
       } else {
         // Fallback to general RAG endpoint
         response = await axiosInstance.post('/rag/generate-prompt', {
           message: inputMessage,
           llm_prompt_template: "You are an AI assistant for educational content. Answer questions based on the provided context.",
+          resource_ids: selectedResourceIds,
           context_documents: null
         });
       }
@@ -194,6 +257,40 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
             className="flex-1 border border-gray-300 dark:border-gray-600 rounded-l-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
             disabled={isLoading}
           />
+          <div className="relative">
+            <button
+              onClick={() => setShowResourcesDropdown(!showResourcesDropdown)}
+              disabled={isLoading}
+              className={`p-2.5 border-y border-l border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-l-none flex items-center justify-center transition-all duration-200 ${showResourcesDropdown ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300' : ''}`}
+              title="Select Resources"
+            >
+              <svg
+                className="w-5 h-5 text-blue-500 dark:text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              {selectedResourceIds.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                  {selectedResourceIds.length}
+                </span>
+              )}
+            </button>
+
+            {(moduleId || videoId) && (
+              <ResourcesDropdown
+                isOpen={showResourcesDropdown}
+                onClose={() => setShowResourcesDropdown(false)}
+                moduleId={moduleId || ''}
+                selectedResourceIds={selectedResourceIds}
+                onResourceSelect={handleResourceSelect}
+                onApply={handleApplyResources}
+                onClear={handleClearResources}
+              />
+            )}
+          </div>
           <button
             onClick={sendMessage}
             disabled={isLoading || !inputMessage.trim()}

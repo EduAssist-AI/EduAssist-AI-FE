@@ -63,30 +63,39 @@ export default function Home() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         <div className="col-span-12 space-y-6">
-          <div className="flex justify-between items-center">
-            <h1 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h1 className="heading-xl">
               My Courses
             </h1>
             <button
-              className="text-sm px-3 py-1 border border-gray-300 rounded hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700 dark:text-white"
+              className="button-secondary text-sm px-4 py-2"
               onClick={fetchCourses}
             >
               Refresh
             </button>
           </div>
 
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow px-4 py-2">
-            <input
-              type="text"
-              placeholder="🔍 Search Courses..."
-              className="w-full bg-transparent outline-none text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+          <div className="card p-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="🔍 Search Courses..."
+                className="w-full bg-transparent outline-none text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           {loading ? (
-            <p className="text-gray-500 dark:text-gray-400">Loading courses...</p>
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+            </div>
           ) : (
             <Courses courses={filteredCourses} setCourses={setCourses} />
           )}
