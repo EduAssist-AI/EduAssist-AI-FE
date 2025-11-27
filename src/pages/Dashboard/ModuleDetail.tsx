@@ -8,6 +8,8 @@ import RAGView from '../../components/CourseManagement/RAGView';
 import Card from '../../components/CourseManagement/Card';
 import ResourceUpload from '../../components/CourseManagement/ResourceUpload';
 import { moduleApi, type Resource, type ResourceUploadResponse} from '../../api/modules';
+import ResourcesWithSummaries from '../../components/ResourceSummary/ResourcesWithSummaries';
+import SummaryList from '../../components/SummaryManagement/SummaryList';
 
 // Define the ChatMessage interface
 interface ChatMessage {
@@ -25,7 +27,7 @@ export default function ModuleDetail() {
   const [loading, setLoading] = useState(true);
   const [leftColumnExpanded, setLeftColumnExpanded] = useState(true);
   const [rightColumnExpanded, setRightColumnExpanded] = useState(true);
-  const [activeView, setActiveView] = useState<'quiz' | 'chat' | 'notes' | 'resources'>('chat');
+  const [activeView, setActiveView] = useState<'quiz' | 'chat' | 'notes' | 'resources' | 'moduleSummaries'>('chat');
   const [resources, setResources] = useState<Resource[]>([]);
   const [showUploadForm, setShowUploadForm] = useState(false);
   const navigate = useNavigate();
@@ -178,15 +180,15 @@ export default function ModuleDetail() {
         );
       case 'notes':
         return (
+          <div className="flex flex-col h-full min-h-0">
+            <ResourcesWithSummaries courseId={courseId} moduleId={moduleId} />
+          </div>
+        );
+      case 'moduleSummaries':
+        return (
           <div className="p-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Summary Notes</h2>
-            <p className="text-gray-600 dark:text-gray-300">AI-generated summary notes for {module?.name}</p>
-            <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={() => navigate(`/courses/${courseId}/modules/${moduleId}/notes`)}
-            >
-              View Notes
-            </button>
+            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">All Module Summaries</h2>
+            <SummaryList moduleId={moduleId} courseId={courseId} />
           </div>
         );
       case 'resources':
@@ -501,6 +503,13 @@ export default function ModuleDetail() {
                     title="Summary Notes"
                     description="Access AI-generated summaries for each resource in the module."
                     onClick={() => setActiveView('notes')}
+                    className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
+                  />
+
+                  <Card
+                    title="Module Summaries"
+                    description="View and manage all summaries for this module."
+                    onClick={() => setActiveView('moduleSummaries')}
                     className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
                   />
 
