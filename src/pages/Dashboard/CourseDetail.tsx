@@ -97,15 +97,14 @@ export default function CourseDetail() {
         description={`EduAssist-AI - ${course.name}`}
       />
       
-      <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{course.name}</h1>
             <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{course.description}</p>
             <div className="mt-2 flex items-center space-x-4">
               <span className={`px-2 py-1 text-xs rounded-full ${
-                course.status === 'ACTIVE' 
-                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400' 
+                course.status === 'ACTIVE'
+                  ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
                   : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
               }`}>
                 {course.status}
@@ -130,7 +129,7 @@ export default function CourseDetail() {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Modules</h2>
           </div>
-          
+
           {modules.length > 0 ? (
             <Modules modules={modules} setModules={setModules} courseId={courseId!} />
           ) : (
@@ -148,7 +147,6 @@ export default function CourseDetail() {
             </div>
           )}
         </div>
-      </div>
     </>
   );
 }

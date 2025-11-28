@@ -167,15 +167,17 @@ export default function ModuleDetail() {
         return <RAGView initialMessages={initialChatMessages} title="Module Chat" moduleId={moduleId} />;
       case 'quiz':
         return (
-          <div className="p-6">
+          <div className="flex flex-col h-full min-h-0 p-6">
             <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Quiz Generator</h2>
-            <p className="text-gray-600 dark:text-gray-300">Quiz functionality for {module?.name}</p>
-            <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={() => navigate(`/courses/${courseId}/modules/${moduleId}/quizzes`)}
-            >
-              Take Quiz
-            </button>
+            <div className="flex-1 overflow-auto">
+              <p className="text-gray-600 dark:text-gray-300">Quiz functionality for {module?.name}</p>
+              <button
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={() => navigate(`/courses/${courseId}/modules/${moduleId}/quizzes`)}
+              >
+                Take Quiz
+              </button>
+            </div>
           </div>
         );
       case 'notes':
@@ -186,105 +188,111 @@ export default function ModuleDetail() {
         );
       case 'moduleSummaries':
         return (
-          <div className="p-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">All Module Summaries</h2>
-            <SummaryList moduleId={moduleId} courseId={courseId} />
+          <div className="flex flex-col h-full min-h-0">
+            <div className="p-6 flex-1 overflow-auto min-h-0">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">All Module Summaries</h2>
+              <SummaryList moduleId={moduleId} courseId={courseId} />
+            </div>
           </div>
         );
       case 'resources':
         return (
-          <div className="p-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Resources</h2>
-            {resources && resources.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {resources.map((resource) => (
-                  <div
-                    key={resource.id}
-                    className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
-                  >
-                    <div className="flex items-center">
-                      <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded mr-3">
-                        {resource.type === "pdf" && (
-                          <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                          </svg>
-                        )}
-                        {resource.type === "docx" && (
-                          <svg className="w-5 h-5 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        )}
-                        {resource.type === "txt" && (
-                          <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                        )}
-                        {(resource.type === "video" || !resource.type) && (
-                          <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-800 dark:text-white truncate">{resource.title}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{resource.type || 'resource'}</p>
-                        <div className="mt-1 flex items-center space-x-4">
-                          {/* <span className={`text-xs px-2 py-1 rounded-full ${
-                            resource.status === 'COMPLETE'
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                              : resource.status === 'PROCESSING'
-                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                              : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                          }`}>
-                            {resource.status}
-                          </span> */}
-                          {/* {resource.hasTranscript && (
-                            <span className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-full">
-                              Transcript
-                            </span>
-                          )} */}
-                          {/* {resource.hasSummary && (
-                            <span className="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400 px-2 py-1 rounded-full">
-                              Summary
-                            </span>
-                          )} */}
+          <div className="flex flex-col h-full min-h-0">
+            <div className="p-6 flex-1 overflow-auto min-h-0">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Resources</h2>
+              {resources && resources.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {resources.map((resource) => (
+                    <div
+                      key={resource.id}
+                      className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      <div className="flex items-center">
+                        <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded mr-3">
+                          {resource.type === "pdf" && (
+                            <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                          )}
+                          {resource.type === "docx" && (
+                            <svg className="w-5 h-5 text-blue-500 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                          )}
+                          {resource.type === "txt" && (
+                            <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                          )}
+                          {(resource.type === "video" || !resource.type) && (
+                            <svg className="w-5 h-5 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-800 dark:text-white truncate">{resource.title}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{resource.type || 'resource'}</p>
+                          <div className="mt-1 flex items-center space-x-4">
+                            {/* <span className={`text-xs px-2 py-1 rounded-full ${
+                              resource.status === 'COMPLETE'
+                                ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                                : resource.status === 'PROCESSING'
+                                ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                            }`}>
+                              {resource.status}
+                            </span> */}
+                            {/* {resource.hasTranscript && (
+                              <span className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-full">
+                                Transcript
+                              </span>
+                            )} */}
+                            {/* {resource.hasSummary && (
+                              <span className="text-xs bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400 px-2 py-1 rounded-full">
+                                Summary
+                              </span>
+                            )} */}
+                          </div>
                         </div>
                       </div>
+                      <div className="mt-3 flex justify-end space-x-2">
+                        <button
+                          className="text-xs px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRenameResource(resource);
+                          }}
+                        >
+                          Rename
+                        </button>
+                        <button
+                          className="text-xs px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteResource(resource);
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                    <div className="mt-3 flex justify-end space-x-2">
-                      <button
-                        className="text-xs px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleRenameResource(resource);
-                        }}
-                      >
-                        Rename
-                      </button>
-                      <button
-                        className="text-xs px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteResource(resource);
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-500 dark:text-gray-400">No resources available for this module</p>
-              </div>
-            )}
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 dark:text-gray-400">No resources available for this module</p>
+                </div>
+              )}
+            </div>
           </div>
         );
       default:
         return (
-          <div className="p-6 flex justify-center items-center">
-            <p className="text-gray-600 dark:text-gray-300">Select a feature from the right column to view its content.</p>
+          <div className="flex flex-col h-full min-h-0 p-6">
+            <div className="flex flex-1 justify-center items-center">
+              <p className="text-gray-600 dark:text-gray-300">Select a feature from the right column to view its content.</p>
+            </div>
           </div>
         );
     }
@@ -325,7 +333,7 @@ export default function ModuleDetail() {
         description={`EduAssist-AI - ${module.name}`}
       />
 
-      <div className="flex flex-col flex-1 min-h-0 w-full"> {/* Use flex-1 to fill available space, min-h-0 to prevent overflow */}
+      <div className="flex flex-col h-screen w-full"> {/* Use h-screen to fill entire viewport height */}
         {/* Header */}
         <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4 flex-shrink-0">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -357,7 +365,7 @@ export default function ModuleDetail() {
         <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Left Column - Resources */}
           <div
-            className={`bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 ${
+            className={`bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-full transition-all duration-300 ${
               leftColumnExpanded ? 'w-64' : 'w-16'
             }`}
           >
@@ -380,7 +388,7 @@ export default function ModuleDetail() {
             </div>
 
             {leftColumnExpanded && (
-              <div className="p-4 flex-1 overflow-auto min-h-0">
+              <div className="p-4 flex-1 overflow-auto">
                 {showUploadForm ? (
                   <ResourceUpload
                     moduleId={moduleId}
@@ -452,15 +460,15 @@ export default function ModuleDetail() {
           </div>
 
           {/* Center Column - Viewer Section */}
-          <div className="flex-1 flex flex-col overflow-hidden min-h-0">
-            <div className="flex-1 overflow-auto min-h-0">
+          <div className="flex-1 flex flex-col h-full">
+            <div className="flex-1 overflow-auto">
               {renderActiveView()}
             </div>
           </div>
 
           {/* Right Column - Feature Cards */}
           <div
-            className={`bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 flex flex-col transition-all duration-300 ${
+            className={`bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 flex flex-col h-full transition-all duration-300 ${
               rightColumnExpanded ? 'w-80' : 'w-16'
             }`}
           >
@@ -483,8 +491,8 @@ export default function ModuleDetail() {
             </div>
 
             {rightColumnExpanded && (
-              <div className="p-4 flex-1 min-h-0" style={{ overflowY: 'auto', maxHeight: '500px' }}>
-                <div className="space-y-4 h-full">
+              <div className="p-4 flex-1 overflow-auto">
+                <div className="space-y-4">
                   <Card
                     title="Module Chat"
                     description="Ask questions and interact with the AI trained on module content."

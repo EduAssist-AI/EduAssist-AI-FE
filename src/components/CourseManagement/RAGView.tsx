@@ -204,28 +204,33 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{title}</h2>
       </div>
-      
-      <div className="p-4 bg-gray-50 dark:bg-gray-800 flex-1 min-h-0" style={{ height: '600px' }}>
-        <div className="flex flex-col h-full max-w-4xl mx-auto w-full">
-          <div className="space-y-4 overflow-y-auto" style={{ maxHeight: '580px', overflowY: 'scroll', height: '600px' }}>
+
+      <div className="p-4 bg-gray-50 dark:bg-gray-800 flex-1 overflow-auto min-h-0">
+        <div className="flex flex-col h-full w-full">
+          <div className="space-y-4 overflow-y-auto flex-1 max-w-6xl mx-auto w-full">
           {messages.map((msg) => (
-            <div 
-              key={msg.id} 
-              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+            <div
+              key={msg.id}
+              className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} mb-3`}
             >
-              <div 
-                className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                  msg.sender === 'user' 
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-600'
-                }`}
+              <div
+                className={`max-w-[80%] ${
+                  msg.sender === 'user'
+                    ? 'bg-blue-600 text-white rounded-br-none rounded-2xl'
+                    : 'bg-white dark:bg-gray-700 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-600 rounded-bl-none rounded-2xl'
+                } px-4 py-3 shadow-sm relative group`}
               >
                 <div className="whitespace-pre-wrap">{msg.message}</div>
-                <div className={`text-xs mt-1 ${msg.sender === 'user' ? 'text-blue-100' : 'text-gray-500 dark:text-gray-400'}`}>
-                  {msg.timestamp}
+                <div className={`text-xs mt-2 flex items-center space-x-1 ${msg.sender === 'user' ? 'text-blue-100 justify-end' : 'text-gray-500 dark:text-gray-400 justify-start'}`}>
+                  <span>{msg.timestamp}</span>
+                  {msg.sender === 'user' && (
+                    <svg className="w-3 h-3 text-blue-200" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  )}
                 </div>
               </div>
             </div>
@@ -245,23 +250,24 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
         </div>
       </div>
     </div>
-      
+
       <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
-        <div className="flex max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto w-full">
+          <div className="flex">
           <input
             type="text"
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Type your message..."
-            className="flex-1 border border-gray-300 dark:border-gray-600 rounded-l-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
+            className="flex-1 border border-gray-300 dark:border-gray-600 rounded-l-xl px-4 py-3 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-gray-500 dark:placeholder-gray-400"
             disabled={isLoading}
           />
           <div className="relative">
             <button
               onClick={() => setShowResourcesDropdown(!showResourcesDropdown)}
               disabled={isLoading}
-              className={`p-2.5 border-y border-l border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-l-none flex items-center justify-center transition-all duration-200 ${showResourcesDropdown ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300' : ''}`}
+              className={`py-3 pl-3 pr-2 border-y border-l border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-l-none flex items-center justify-center transition-colors duration-200 ${showResourcesDropdown ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : ''}`}
               title="Select Resources"
             >
               <svg
@@ -294,13 +300,16 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
           <button
             onClick={sendMessage}
             disabled={isLoading || !inputMessage.trim()}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r-lg disabled:opacity-50"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-r-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center"
           >
-            Send
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
           </button>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

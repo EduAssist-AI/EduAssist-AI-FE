@@ -58,7 +58,7 @@ export default function Modules({ modules, setModules, courseId }: Props) {
   };
 
   return (
-    <div className="relative">
+    <div>
       {/* Floating Button */}
       <button
         onClick={() => {
@@ -119,9 +119,9 @@ export default function Modules({ modules, setModules, courseId }: Props) {
       )}
 
       {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 w-full">
         {modules.map((module, index) => (
-          <div key={module.moduleId} className="relative rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 md:p-6 hover:shadow-lg transition-shadow">
+          <div key={module.moduleId} className="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 md:p-6 hover:shadow-lg transition-shadow flex flex-col h-full">
             {/* Top Row */}
             <div className="flex justify-between items-start">
               <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center">
@@ -162,7 +162,7 @@ export default function Modules({ modules, setModules, courseId }: Props) {
             </div>
 
             {/* Content */}
-            <div className="mt-5">
+            <div className="mt-5 flex-grow">
               <span className="text-sm text-gray-500 dark:text-gray-400">Module #{index + 1}</span>
               <h4 className="mt-2 text-xl font-semibold text-gray-800 dark:text-white max-w-[90%] truncate">
                 {module.name}
@@ -171,14 +171,15 @@ export default function Modules({ modules, setModules, courseId }: Props) {
               <p className="text-sm mt-2 text-gray-600 dark:text-gray-300 line-clamp-2 max-h-12 overflow-hidden" title={module.description || ''}>
                 {module.description || 'No description provided'}
               </p>
+            </div>
 
-              <div className="absolute bottom-5 right-5">
-                <Link to={`/courses/${courseId}/modules/${module.moduleId}`} state={{ module, courseId }}>
-                  <Badge color="primary" size="sm">
-                    View Module
-                  </Badge>
-                </Link>
-              </div>
+            {/* Action Button */}
+            <div className="mt-auto pt-4">
+              <Link to={`/courses/${courseId}/modules/${module.moduleId}`} state={{ module, courseId }}>
+                <Badge color="primary" size="sm">
+                  View Module
+                </Badge>
+              </Link>
             </div>
           </div>
         ))}

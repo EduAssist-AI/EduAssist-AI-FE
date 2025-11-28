@@ -17,8 +17,8 @@ const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseI
   };
 
   return (
-    <div className="flex flex-col h-full min-h-0">
-      <div className="p-6 flex-shrink-0">
+    <div className="flex flex-col h-full">
+      <div className="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Module Summaries</h2>
           <button
@@ -31,11 +31,9 @@ const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseI
             {showCreator ? 'Cancel' : 'Create Summary'}
           </button>
         </div>
-      </div>
 
-      <div className="flex-grow overflow-y-auto min-h-0">
         {showCreator && (
-          <div className="p-6 flex-shrink-0">
+          <div className="mb-6">
             <SummaryCreator
               moduleId={moduleId}
               courseId={courseId}
@@ -43,10 +41,10 @@ const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseI
             />
           </div>
         )}
+      </div>
 
-        <div className="flex-grow">
-          <SummaryList moduleId={moduleId} courseId={courseId} />
-        </div>
+      <div className="p-6 flex-1 overflow-auto bg-white dark:bg-gray-800 min-h-0">
+        <SummaryList moduleId={moduleId} courseId={courseId} />
       </div>
     </div>
   );
