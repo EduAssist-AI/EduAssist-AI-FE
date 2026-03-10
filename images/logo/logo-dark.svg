@@ -1,0 +1,17 @@
+<svg width="160" height="40" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="40" height="40" rx="6" fill="#465FFF"/>
+
+  <!-- Book icon -->
+  <path d="M10 14C10 13.4477 10.4477 13 11 13H22C22.5523 13 23 13.4477 23 14V26C23 26.5523 22.5523 27 22 27H11C10.4477 27 10 26.5523 10 26V14Z" fill="white" opacity="0.9"/>
+  <path d="M12 15V16H13V15H12ZM12 17V18H13V17H12ZM12 19V20H13V19H12ZM12 21V22H13V21H12ZM12 23V24H13V23H12ZM14 15V16H15V15H14ZM14 17V18H15V17H14ZM14 19V20H15V19H14ZM14 21V22H15V21H14ZM14 23V24H15V23H14ZM16 15V16H17V15H16ZM16 17V18H17V17H16ZM16 19V20H17V19H16ZM16 21V22H17V21H16ZM16 23V24H17V23H16ZM18 15V16H19V15H18ZM18 17V18H19V17H18ZM18 19V20H19V19H18ZM18 21V22H19V21H18ZM18 23V24H19V23H18ZM11 14V26H22V14H11Z" fill="white" opacity="0.6"/>
+
+  <!-- Robot icon -->
+  <rect x="25" y="15" width="10" height="10" rx="1" fill="white"/>
+  <rect x="27" y="17" width="2" height="2" rx="1" fill="#465FFF"/>
+  <rect x="31" y="17" width="2" height="2" rx="1" fill="#465FFF"/>
+  <path d="M25 25C25 24.4477 25.4477 24 26 24H33C33.5523 24 34 24.4477 34 25V27C34 27.5523 33.5523 28 33 28H26C25.4477 28 25 27.5523 25 27V25Z" fill="white"/>
+
+  <!-- EduAssistAI text -->
+  <text x="50" y="25" font-family="Arial, sans-serif" font-size="16" fill="white" font-weight="bold">EduAssistAI</text>
+</svg>
