@@ -10,6 +10,7 @@ import {
   UserCircleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
+import { getImagePath } from "../utils/imagePaths";
 
 type NavItem = {
   name: string;
@@ -324,14 +325,14 @@ const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo.svg"
+                src={getImagePath("/images/logo/logo.svg")}
                 alt="EduAssistAI"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src={getImagePath("/images/logo/logo-dark.svg")}
                 alt="EduAssistAI"
                 width={150}
                 height={40}
@@ -339,7 +340,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/logo-icon.svg"
+              src={getImagePath("/images/logo/logo-icon.svg")}
               alt="EduAssistAI"
               width={32}
               height={32}

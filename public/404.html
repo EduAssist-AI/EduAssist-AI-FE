@@ -3,22 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="0; url=/EduAssist-AI-FE/" />
-    <link rel="canonical" href="/EduAssist-AI-FE/" />
     <title>Redirecting...</title>
+    <script>
+      // Single Page Application hash-based routing fix for GitHub Pages
+      var basePath = '/EduAssist-AI-FE';
+      var path = window.location.pathname;
+      
+      // Don't redirect if already on root or if it's an asset
+      if (!path.endsWith('/') && !path.includes('.')) {
+        // Remove base path from current path
+        var cleanPath = path.replace(basePath, '') || '/';
+        
+        // Redirect to index.html with hash
+        window.location.replace(basePath + '/#' + cleanPath);
+      } else {
+        // For assets, redirect to base
+        window.location.replace(basePath + '/');
+      }
+    </script>
   </head>
   <body>
-    <script>
-      // Single Page Application hash-based routing fix
-      var path = window.location.pathname;
-      var basePath = '/EduAssist-AI-FE';
-      
-      // Remove base path from current path
-      var cleanPath = path.replace(basePath, '') || '/';
-      
-      // Redirect to index.html with hash
-      window.location.replace(basePath + '/#' + cleanPath);
-    </script>
     <p>Redirecting to <a href="/EduAssist-AI-FE/">homepage</a>...</p>
   </body>
 </html>

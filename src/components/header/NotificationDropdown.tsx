@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Link } from "react-router";
+import { getImagePath } from "../../utils/imagePaths";
 
 export default function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,7 +88,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-02.jpg"
+                  src={getImagePath("/images/user/user-02.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -123,7 +124,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-03.jpg"
+                  src={getImagePath("/images/user/user-03.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -159,7 +160,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-04.jpg"
+                  src={getImagePath("/images/user/user-04.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -196,7 +197,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-05.jpg"
+                  src={getImagePath("/images/user/user-05.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -232,7 +233,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-02.jpg"
+                  src={getImagePath("/images/user/user-02.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -268,7 +269,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-03.jpg"
+                  src={getImagePath("/images/user/user-03.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -304,7 +305,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-04.jpg"
+                  src={getImagePath("/images/user/user-04.jpg")}
                   alt="User"
                   className="w-full overflow-hidden rounded-full"
                 />
@@ -340,7 +341,7 @@ export default function NotificationDropdown() {
                 <img
                   width={40}
                   height={40}
-                  src="/images/user/user-05.jpg"
+                  src={getImagePath("/images/user/user-05.jpg")}
                   alt="User"
                   className="overflow-hidden rounded-full"
                 />
