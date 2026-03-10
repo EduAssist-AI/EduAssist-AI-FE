@@ -5,21 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <script>
-      // Single Page Application hash-based routing fix for GitHub Pages
+      // Single Page Application routing fix for GitHub Pages
+      // Always redirect to index.html, React Router will handle the route
       var basePath = '/EduAssist-AI-FE';
-      var path = window.location.pathname;
-      
-      // Don't redirect if already on root or if it's an asset
-      if (!path.endsWith('/') && !path.includes('.')) {
-        // Remove base path from current path
-        var cleanPath = path.replace(basePath, '') || '/';
-        
-        // Redirect to index.html with hash
-        window.location.replace(basePath + '/#' + cleanPath);
-      } else {
-        // For assets, redirect to base
-        window.location.replace(basePath + '/');
-      }
+      window.location.replace(basePath + '/');
     </script>
   </head>
   <body>
