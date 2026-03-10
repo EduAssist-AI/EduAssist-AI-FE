@@ -350,7 +350,7 @@ END OF SUMMARY
               </button>
             </div>
 
-            {/* Modal content - document viewer style */}
+            
             <div className="p-6 overflow-y-auto flex-grow bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
               <div className="prose prose-gray max-w-none bg-white dark:bg-gray-700 p-6 rounded-lg shadow min-h-full border border-gray-200 dark:border-gray-600">
                 <div className="whitespace-pre-line text-gray-800 dark:text-gray-200 text-base leading-relaxed">
