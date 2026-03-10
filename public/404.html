@@ -6,12 +6,18 @@
     <title>Redirecting...</title>
     <script>
       // Single Page Application routing fix for GitHub Pages
-      // Always redirect to index.html, React Router will handle the route
       var basePath = '/EduAssist-AI-FE';
-      window.location.replace(basePath + '/');
+      var path = window.location.pathname;
+      
+      // Remove base path to get the actual route
+      var route = path.replace(basePath, '') || '/';
+      
+      // Redirect to index.html with the route as hash
+      // React Router will read the hash and navigate to the correct page
+      window.location.replace(basePath + '/#' + route);
     </script>
   </head>
   <body>
-    <p>Redirecting to <a href="/EduAssist-AI-FE/">homepage</a>...</p>
+    <p>Redirecting...</p>
   </body>
 </html>
