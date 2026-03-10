@@ -59,11 +59,6 @@ const SummaryForm: React.FC<SummaryFormProps> = ({
         }
       } else {
         // Create new summary using the API
-        const newSummaryData = {
-          ...formData,
-          video_id: videoId,
-          resource_id: resourceId,
-        };
         // Note: The API doesn't have a direct createSummary method, use appropriate endpoint
         // For now, we'll use a placeholder that indicates the limitation
         toast.error("Summary creation requires API endpoint implementation");

@@ -183,7 +183,7 @@ export default function ModuleDetail() {
       case 'notes':
         return (
           <div className="flex flex-col h-full min-h-0">
-            <ResourcesWithSummaries courseId={courseId} moduleId={moduleId} />
+            <ResourcesWithSummaries courseId={courseId} />
           </div>
         );
       case 'moduleSummaries':
@@ -191,7 +191,7 @@ export default function ModuleDetail() {
           <div className="flex flex-col h-full min-h-0">
             <div className="p-6 flex-1 overflow-auto min-h-0">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">All Module Summaries</h2>
-              <SummaryList moduleId={moduleId} courseId={courseId} />
+              <SummaryList courseId={courseId} />
             </div>
           </div>
         );

@@ -199,7 +199,7 @@ export default function Courses({ courses, setCourses }: Props) {
                   </Badge>
                 </Link>
                 <button
-                  onClick={() => handleJoinCourse(course.courseId)}
+                  onClick={() => handleJoinCourse()}
                   className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                 >
                   Join Course

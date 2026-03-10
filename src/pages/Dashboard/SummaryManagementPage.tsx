@@ -22,7 +22,7 @@ export default function SummaryManagementPage() {
           </p>
         </div>
 
-        <SummaryList moduleId={moduleId} courseId={courseId} />
+        <SummaryList courseId={courseId} />
       </div>
     </>
   );

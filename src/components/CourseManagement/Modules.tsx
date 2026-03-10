@@ -10,9 +10,10 @@ import { Module } from "./CourseTypes";
 type Props = {
   modules: Module[];
   setModules: React.Dispatch<React.SetStateAction<Module[]>>;
+  courseId: string;
 };
 
-export default function Modules({ modules, setModules }: Props) {
+export default function Modules({ modules, setModules, courseId }: Props) {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [formValues, setFormValues] = useState({ name: "", description: "" });
   const [editingModule, setEditingModule] = useState<Module | null>(null);

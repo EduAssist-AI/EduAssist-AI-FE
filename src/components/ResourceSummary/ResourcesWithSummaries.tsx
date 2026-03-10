@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-import { moduleApi, type ResourceWithSummary } from '../../api/modules';
 import SummaryCreator from '../SummaryManagement/SummaryCreator';
 import SummaryList from '../SummaryManagement/SummaryList';
 
 interface ResourcesWithSummariesProps {
   courseId: string;
-  moduleId: string;
 }
 
-const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseId, moduleId }) => {
+const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseId }) => {
   const [showCreator, setShowCreator] = useState(false);
 
   // Function to refresh summaries when a new one is created
