@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
@@ -37,6 +37,9 @@ export default function App() {
         {/* Auth Routes */}
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+        
+        {/* Redirect root to signin */}
+        <Route path="/" element={<Navigate to="/signin" replace />} />
 
         {/* Protected Routes */}
         <Route
@@ -47,24 +50,23 @@ export default function App() {
           }
         >
           <Route path="/test-suites/:id" element={<TestSuiteDetails />} />
-          <Route index path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-          <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-          <Route path="/courses/:courseId" element={<PrivateRoute><CourseDetail /></PrivateRoute>} />
-          <Route path="/courses/:courseId/modules/:moduleId" element={<PrivateRoute><ModuleDetail /></PrivateRoute>} />
-          <Route path="/courses/:courseId/modules/:moduleId/summaries" element={<PrivateRoute><SummaryManagementPage /></PrivateRoute>} />
-          <Route path="/profile" element={<PrivateRoute><UserProfiles /></PrivateRoute>} />
-          <Route path="/calendar" element={<PrivateRoute><Calendar /></PrivateRoute>} />
-          <Route path="/blank" element={<PrivateRoute><Blank /></PrivateRoute>} />
-          <Route path="/form-elements" element={<PrivateRoute><FormElements /></PrivateRoute>} />
-          <Route path="/basic-tables" element={<PrivateRoute><BasicTables /></PrivateRoute>} />
-          <Route path="/alerts" element={<PrivateRoute><Alerts /></PrivateRoute>} />
-          <Route path="/avatars" element={<PrivateRoute><Avatars /></PrivateRoute>} />
-          <Route path="/badge" element={<PrivateRoute><Badges /></PrivateRoute>} />
-          <Route path="/buttons" element={<PrivateRoute><Buttons /></PrivateRoute>} />
-          <Route path="/images" element={<PrivateRoute><Images /></PrivateRoute>} />
-          <Route path="/videos" element={<PrivateRoute><Videos /></PrivateRoute>} />
-          <Route path="/line-chart" element={<PrivateRoute><LineChart /></PrivateRoute>} />
-          <Route path="/bar-chart" element={<PrivateRoute><BarChart /></PrivateRoute>} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/courses/:courseId" element={<CourseDetail />} />
+          <Route path="/courses/:courseId/modules/:moduleId" element={<ModuleDetail />} />
+          <Route path="/courses/:courseId/modules/:moduleId/summaries" element={<SummaryManagementPage />} />
+          <Route path="/profile" element={<UserProfiles />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/blank" element={<Blank />} />
+          <Route path="/form-elements" element={<FormElements />} />
+          <Route path="/basic-tables" element={<BasicTables />} />
+          <Route path="/alerts" element={<Alerts />} />
+          <Route path="/avatars" element={<Avatars />} />
+          <Route path="/badge" element={<Badges />} />
+          <Route path="/buttons" element={<Buttons />} />
+          <Route path="/images" element={<Images />} />
+          <Route path="/videos" element={<Videos />} />
+          <Route path="/line-chart" element={<LineChart />} />
+          <Route path="/bar-chart" element={<BarChart />} />
         </Route>
 
         {/* Public Profile (if needed) */}
