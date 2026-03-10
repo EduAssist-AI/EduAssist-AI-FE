@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0; url=/EduAssist-AI-FE/" />
+    <link rel="canonical" href="/EduAssist-AI-FE/" />
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <script>
+      // Single Page Application hash-based routing fix
+      var path = window.location.pathname;
+      var basePath = '/EduAssist-AI-FE';
+      
+      // Remove base path from current path
+      var cleanPath = path.replace(basePath, '') || '/';
+      
+      // Redirect to index.html with hash
+      window.location.replace(basePath + '/#' + cleanPath);
+    </script>
+    <p>Redirecting to <a href="/EduAssist-AI-FE/">homepage</a>...</p>
+  </body>
+</html>
