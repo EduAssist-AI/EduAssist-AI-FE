@@ -27,7 +27,7 @@ export default function ModuleDetail() {
   const [loading, setLoading] = useState(true);
   const [leftColumnExpanded, setLeftColumnExpanded] = useState(true);
   const [rightColumnExpanded, setRightColumnExpanded] = useState(true);
-  const [activeView, setActiveView] = useState<'quiz' | 'chat' | 'notes' | 'resources' | 'moduleSummaries'>('chat');
+  const [activeView, setActiveView] = useState<'chat' | 'notes' | 'resources' | 'moduleSummaries'>('chat');
   const [resources, setResources] = useState<Resource[]>([]);
   const [showUploadForm, setShowUploadForm] = useState(false);
   const navigate = useNavigate();
@@ -165,21 +165,21 @@ export default function ModuleDetail() {
     switch (activeView) {
       case 'chat':
         return <RAGView initialMessages={initialChatMessages} title="Module Chat" moduleId={moduleId} />;
-      case 'quiz':
-        return (
-          <div className="flex flex-col h-full min-h-0 p-6">
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Quiz Generator</h2>
-            <div className="flex-1 overflow-auto">
-              <p className="text-gray-600 dark:text-gray-300">Quiz functionality for {module?.name}</p>
-              <button
-                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                onClick={() => navigate(`/courses/${courseId}/modules/${moduleId}/quizzes`)}
-              >
-                Take Quiz
-              </button>
-            </div>
-          </div>
-        );
+      // case 'quiz':
+        // return (
+          // <div className="flex flex-col h-full min-h-0 p-6">
+            // <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-4">Quiz Generator</h2>
+            // <div className="flex-1 overflow-auto">
+              // <p className="text-gray-600 dark:text-gray-300">Quiz functionality for {module?.name}</p>
+              // <button
+                // className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                // onClick={() => navigate(`/courses/${courseId}/modules/${moduleId}/quizzes`)}
+              // >
+                // Take Quiz
+              // </button>
+            // </div>
+          // </div>
+        // );
       case 'notes':
         return (
           <div className="flex flex-col h-full min-h-0">
@@ -500,12 +500,12 @@ export default function ModuleDetail() {
                     className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
                   />
 
-                  <Card
+                  {/* <Card
                     title="Quiz Generator"
                     description="Generate and take AI-powered quizzes based on module content."
                     onClick={() => setActiveView('quiz')}
                     className="cursor-pointer transition-transform duration-200 hover:scale-[1.02]"
-                  />
+                  /> */}
 
                   <Card
                     title="Summary Notes"
