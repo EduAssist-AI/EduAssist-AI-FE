@@ -3,7 +3,7 @@ import axios from 'axios';
 import { store } from '../store/store';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_URL || 'https://pdf-cartoons-lay-berry.trycloudflare.com',
 });
 
 api.interceptors.request.use((config) => {
