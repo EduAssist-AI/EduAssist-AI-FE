@@ -2,11 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { moduleApi, type ResourceWithSummary } from '../../api/modules';
 
 interface SummaryListProps {
-  moduleId: string;
   courseId: string;
 }
 
-const SummaryList: React.FC<SummaryListProps> = ({ moduleId, courseId }) => {
+const SummaryList: React.FC<SummaryListProps> = ({ courseId }) => {
   const [resources, setResources] = useState<ResourceWithSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { moduleApi, type ResourceWithSummary, type SummaryRequest } from '../../api/modules';
 
 interface SummaryCreatorProps {
-  moduleId: string;
   courseId: string;
   onSummaryCreated?: () => void;
 }
 
-const SummaryCreator: React.FC<SummaryCreatorProps> = ({ moduleId, courseId, onSummaryCreated }) => {
+const SummaryCreator: React.FC<SummaryCreatorProps> = ({ courseId, onSummaryCreated }) => {
   const [resources, setResources] = useState<ResourceWithSummary[]>([]);
   const [selectedResourceIds, setSelectedResourceIds] = useState<string[]>([]);
   const [lengthType, setLengthType] = useState<'BRIEF' | 'DETAILED' | 'COMPREHENSIVE'>('DETAILED');

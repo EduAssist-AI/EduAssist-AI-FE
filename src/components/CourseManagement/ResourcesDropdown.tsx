@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dropdown } from '../ui/dropdown/Dropdown';
-import { DropdownItem } from '../ui/dropdown/DropdownItem';
 import Checkbox from '../form/input/Checkbox';
 import { Resource, moduleApi } from '../../api/modules';
 import { useAuth } from '../../hooks/useAuth';
@@ -27,7 +26,6 @@ const ResourcesDropdown: React.FC<ResourcesDropdownProps> = ({
   const [resources, setResources] = useState<Resource[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { token } = useAuth();
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isOpen && moduleId && moduleId !== '' && token) {

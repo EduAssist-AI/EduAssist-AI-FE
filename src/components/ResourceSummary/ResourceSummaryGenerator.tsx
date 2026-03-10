@@ -3,16 +3,12 @@ import { moduleApi, type SummaryRequest } from '../../api/modules';
 
 interface ResourceSummaryGeneratorProps {
   resourceId: string;
-  moduleId: string;
-  courseId: string;
   onSummaryGenerated?: (summary: string) => void;
 }
 
-const ResourceSummaryGenerator: React.FC<ResourceSummaryGeneratorProps> = ({ 
-  resourceId, 
-  moduleId,
-  courseId,
-  onSummaryGenerated 
+const ResourceSummaryGenerator: React.FC<ResourceSummaryGeneratorProps> = ({
+  resourceId,
+  onSummaryGenerated
 }) => {
   const [lengthType, setLengthType] = useState<'BRIEF' | 'DETAILED' | 'COMPREHENSIVE'>('DETAILED');
   const [focusAreas, setFocusAreas] = useState('');

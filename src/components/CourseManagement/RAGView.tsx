@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import axiosInstance from '../../api/axios';
-import { moduleApi, type ChatMessage as ModuleChatMessage, type Resource } from '../../api/modules';
+import { moduleApi } from '../../api/modules';
 import ResourcesDropdown from './ResourcesDropdown';
 
 interface ChatMessage {
@@ -84,12 +84,12 @@ const RAGView: React.FC<RAGViewProps> = ({ initialMessages, title = "Chat", modu
         {
           id: `response-${chat.timestamp}`,
           message: chat.response,
-          sender: 'system' as 'user' | 'system', // Explicitly type the sender
+          sender: 'system' as 'user' | 'system',
           timestamp: new Date(chat.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         }
       ]);
-      
-      setMessages(prev => [...initialMessages, ...formattedMessages]);
+
+      setMessages([...initialMessages, ...formattedMessages]);
     } catch (error) {
       console.error('Error fetching chat history:', error);
     }

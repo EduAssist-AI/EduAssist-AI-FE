@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { moduleApi, type ResourceWithSummary } from '../../api/modules';
 import SummaryCreator from '../SummaryManagement/SummaryCreator';
 import SummaryList from '../SummaryManagement/SummaryList';
@@ -35,7 +35,6 @@ const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseI
         {showCreator && (
           <div className="mb-6">
             <SummaryCreator
-              moduleId={moduleId}
               courseId={courseId}
               onSummaryCreated={handleSummaryCreated}
             />
@@ -44,7 +43,7 @@ const ResourcesWithSummaries: React.FC<ResourcesWithSummariesProps> = ({ courseI
       </div>
 
       <div className="p-6 flex-1 overflow-auto bg-white dark:bg-gray-800 min-h-0">
-        <SummaryList moduleId={moduleId} courseId={courseId} />
+        <SummaryList courseId={courseId} />
       </div>
     </div>
   );

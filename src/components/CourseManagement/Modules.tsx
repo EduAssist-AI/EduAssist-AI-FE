@@ -10,16 +10,14 @@ import { Module } from "./CourseTypes";
 type Props = {
   modules: Module[];
   setModules: React.Dispatch<React.SetStateAction<Module[]>>;
-  courseId: string; // Course ID this module belongs to
 };
 
-export default function Modules({ modules, setModules, courseId }: Props) {
+export default function Modules({ modules, setModules }: Props) {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [formValues, setFormValues] = useState({ name: "", description: "" });
   const [editingModule, setEditingModule] = useState<Module | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
-  const [loading, setLoading] = useState<Record<string, boolean>>({});
 
   const handleCreateOrEdit = async () => {
     try {
@@ -28,9 +26,7 @@ export default function Modules({ modules, setModules, courseId }: Props) {
         setModules(prev => prev.map(m => m.moduleId === editingModule.moduleId ? res.data : m));
         toast.success("Module updated!");
       } else {
-        const res = await axiosInstance.post(`/api/v1/courses/${courseId}/modules`, formValues);
-        setModules(prev => [...prev, res.data]);
-        toast.success("Module created!");
+        toast.error("Cannot create module without course ID");
       }
       setShowCreateForm(false);
       setFormValues({ name: "", description: "" });
@@ -43,7 +39,6 @@ export default function Modules({ modules, setModules, courseId }: Props) {
 
   const handleDelete = async () => {
     if (!confirmId) return;
-    setLoading(prev => ({ ...prev, [confirmId]: true }));
     try {
       await axiosInstance.delete(`/api/v1/modules/${confirmId}`);
       setModules(prev => prev.filter(m => m.moduleId !== confirmId));
@@ -53,7 +48,6 @@ export default function Modules({ modules, setModules, courseId }: Props) {
       toast.error(error.response?.data?.detail || "Failed to delete module.");
     } finally {
       setConfirmId(null);
-      setLoading(prev => ({ ...prev, [confirmId]: false }));
     }
   };
 

@@ -18,7 +18,6 @@ export default function Courses({ courses, setCourses }: Props) {
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
-  const [loading, setLoading] = useState<Record<string, boolean>>({});
 
   const handleCreateOrEdit = async () => {
     try {
@@ -45,7 +44,6 @@ export default function Courses({ courses, setCourses }: Props) {
 
   const handleDelete = async () => {
     if (!confirmId) return;
-    setLoading(prev => ({ ...prev, [confirmId]: true }));
     try {
       await axiosInstance.delete(`/api/v1/courses/${confirmId}`);
       setCourses(prev => prev.filter(c => c.courseId !== confirmId));
@@ -55,14 +53,11 @@ export default function Courses({ courses, setCourses }: Props) {
       toast.error(error.response?.data?.detail || "Failed to delete course.");
     } finally {
       setConfirmId(null);
-      setLoading(prev => ({ ...prev, [confirmId]: false }));
     }
   };
 
-  const handleJoinCourse = async (courseId: string) => {
+  const handleJoinCourse = async () => {
     try {
-      // This would require the course invitation code which we don't have in the card view
-      // In a real implementation, this would happen on a separate join course page
       toast.info("Use the invitation code to join this course");
     } catch (error: any) {
       toast.error(error.response?.data?.detail || "Failed to join course.");

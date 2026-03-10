@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowUpIcon, GroupIcon } from "../../icons";
+import { GroupIcon } from "../../icons";
 import Badge from "../ui/badge/Badge";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../api/axios";

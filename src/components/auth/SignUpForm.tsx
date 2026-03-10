@@ -6,8 +6,6 @@ import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Alert from "../ui/alert/Alert";
 import axiosInstance from "../../api/axios";
-import { useAppDispatch } from "../../store/hooks";
-import { loginSuccess } from "../../store/authSlice";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +16,6 @@ export default function SignUpForm() {
   const [role, setRole] = useState<"FACULTY" | "STUDENT">("STUDENT");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const [alert, setAlert] = useState<{
   variant: "success" | "error" | "warning" | "info";
