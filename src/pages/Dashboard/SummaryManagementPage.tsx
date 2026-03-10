@@ -3,9 +3,8 @@ import PageMeta from '../../components/common/PageMeta';
 import SummaryList from '../../components/SummaryManagement/SummaryList';
 
 export default function SummaryManagementPage() {
-  const params = useParams<{ courseId: string; moduleId: string }>();
+  const params = useParams<{ courseId: string }>();
   const courseId = params.courseId!;
-  const moduleId = params.moduleId!;
 
   return (
     <>
