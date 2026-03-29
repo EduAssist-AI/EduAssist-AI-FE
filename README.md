@@ -478,9 +478,12 @@ For questions, issues, or feature requests:
 | Resource | Link |
 |----------|------|
 | 🚀 Live Demo | [Launch App](https://pritesh24gurjar.github.io/EduAssist-AI-FE/) |
-| 📚 Documentation | [View Docs](./CODE_GRAPH.md) |
-| 🏗️ Architecture | [View Diagrams](./ARCHITECTURE_DIAGRAMS.md) |
-| 📖 User Manual | [Read Manual](./UserManual.md) |
+| 📚 Codebase Documentation | [View Codebase](./CODEBASE.md) |
+| 🏗️ Architecture | [View Architecture](./ARCHITECTURE.md) |
+| 📖 User Guide | [Read Guide](./USER_GUIDE.md) |
+| 🚀 Deployment Guide | [Deploy App](./DEPLOYMENT.md) |
+| 📄 Design Specification | [View Design](./docs/DESIGN_SPECIFICATION.pdf) |
+| 📊 Project Portfolio | [View Portfolio](./docs/PROJECT_PORTFOLIO.pdf) |
 | 🐛 Report Bug | [GitHub Issues](https://github.com/pritesh24gurjar/EduAssist-AI-FE/issues) |
 
 ---
